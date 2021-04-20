@@ -9,6 +9,7 @@ import {
   Keyboard,
   Animated,
   Dimensions,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import Button from '../components/Button';
 import colors from '../styles/colors';
@@ -32,7 +33,6 @@ const UserIdentification = (props: UserIdentificationProps) => {
     Keyboard.addListener('keyboardDidShow', _keyboardDidShow);
     Keyboard.addListener('keyboardDidHide', _keyboardDidHide);
 
-    // cleanup function
     return () => {
       Keyboard.removeListener('keyboardDidShow', _keyboardDidShow);
       Keyboard.removeListener('keyboardDidHide', _keyboardDidHide);
@@ -68,34 +68,36 @@ const UserIdentification = (props: UserIdentificationProps) => {
     setName(value);
   }
 
-  function handleSubmit(){
+  function handleSubmit() {
     navigation.navigate('Confirmation');
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      <Animated.View style={[styles.content, viwTranslateYAnimation]}>
-        <View style={styles.form}>
-          <Text style={styles.emoji}>{isInputFilled ? '😄' : '😃'} </Text>
-          <Text style={styles.title}>Como podemos {'\n'} chamar você?</Text>
-          <TextInput
-            style={[
-              styles.input,
-              (isInputFocused || isInputFilled) && {
-                borderColor: colors.green,
-              },
-            ]}
-            value={name}
-            onChangeText={handleInputChange}
-            placeholder="Digite o nome"
-            onBlur={handleInputFocusBlur}
-            onFocus={handleInputFocusBlur}
-          />
-          <View style={styles.footer}>
-            <Button titleText="Confirmar" onPress={handleSubmit} />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Animated.View style={[styles.content, viwTranslateYAnimation]}>
+          <View style={styles.form}>
+            <Text style={styles.emoji}>{isInputFilled ? '😄' : '😃'} </Text>
+            <Text style={styles.title}>Como podemos {'\n'} chamar você?</Text>
+            <TextInput
+              style={[
+                styles.input,
+                (isInputFocused || isInputFilled) && {
+                  borderColor: colors.green,
+                },
+              ]}
+              value={name}
+              onChangeText={handleInputChange}
+              placeholder="Digite o nome"
+              onBlur={handleInputFocusBlur}
+              onFocus={handleInputFocusBlur}
+            />
+            <View style={styles.footer}>
+              <Button titleText="Confirmar" onPress={handleSubmit} />
+            </View>
           </View>
-        </View>
-      </Animated.View>
+        </Animated.View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 };
