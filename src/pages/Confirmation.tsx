@@ -1,22 +1,31 @@
+import { useNavigation } from '@react-navigation/core';
 import * as React from 'react';
 import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import Button from '../components/Button';
+import TextComplement from '../components/TextComplement';
+import TextHeading from '../components/TextHeading';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
 interface ConfirmationProps {}
 
 const Confirmation = (props: ConfirmationProps) => {
+  const navigation = useNavigation();
+
+  function handleStart() {
+    navigation.navigate('PlantSelect');
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.emoji}>😁</Text>
-        <Text style={styles.title}>Prontinho</Text>
-        <Text style={styles.subtitle}>
+        <TextHeading style={styles.title}>Prontinho</TextHeading>
+        <TextComplement style={styles.subtitle}>
           Agora vamos começar a cuidar de suas plantinhas com muito cuidado.
-        </Text>
+        </TextComplement>
         <View style={styles.footer}>
-          <Button titleText="Começar" />
+          <Button titleText="Começar" onPress={handleStart}/>
         </View>
       </View>
     </SafeAreaView>
@@ -42,15 +51,10 @@ const styles = StyleSheet.create({
     fontSize: 22,
     lineHeight: 38,
     textAlign: 'center',
-    color: colors.heading,
-    fontFamily: fonts.heading,
     marginTop: 25,
   },
   subtitle: {
-    fontSize: 17,
     textAlign: 'center',
-    color: colors.heading,
-    fontFamily: fonts.text,
     paddingVertical: 20,
   },
   emoji: {

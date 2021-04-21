@@ -1,5 +1,4 @@
 import React from 'react';
-import Welcome from './src/pages/Welcome';
 import {
   useFonts,
   Jost_400Regular,

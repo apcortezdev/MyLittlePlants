@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import Button from '../components/Button';
+import TextHeading from '../components/TextHeading';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
 
@@ -78,7 +79,7 @@ const UserIdentification = (props: UserIdentificationProps) => {
         <Animated.View style={[styles.content, viwTranslateYAnimation]}>
           <View style={styles.form}>
             <Text style={styles.emoji}>{isInputFilled ? '😄' : '😃'} </Text>
-            <Text style={styles.title}>Como podemos {'\n'} chamar você?</Text>
+            <TextHeading style={styles.title}>Como podemos {'\n'} chamar você?</TextHeading>
             <TextInput
               style={[
                 styles.input,
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
   },
   content: {
     flex: 1,
@@ -128,8 +129,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     lineHeight: 32,
     textAlign: 'center',
-    color: colors.heading,
-    fontFamily: fonts.heading,
     marginTop: 20,
   },
   input: {
