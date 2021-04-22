@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/core';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -10,11 +11,11 @@ import {
   Animated,
   Dimensions,
   TouchableWithoutFeedback,
+  Alert,
 } from 'react-native';
 import Button from '../components/Button';
 import TextHeading from '../components/TextHeading';
 import colors from '../styles/colors';
-import fonts from '../styles/fonts';
 
 interface UserIdentificationProps {}
 
@@ -69,8 +70,25 @@ const UserIdentification = (props: UserIdentificationProps) => {
     setName(value);
   }
 
-  function handleSubmit() {
-    navigation.navigate('Confirmation');
+  async function handleSubmit() {
+    if (!name) return Alert.alert('Me diz como chamar você 🤔');
+
+    // You can save to Async multiple name/values instead of a huge obj:
+    try {
+      await AsyncStorage.setItem('@plantmanager:user', name.trim());
+    } catch (err) {
+      return Alert.alert(
+        'Ops! Deu 💩! Reinicie o seu celular ou compre outro!'
+      );
+    }
+    navigation.navigate('Confirmation', {
+      title: 'Prontinho',
+      subtitle:
+        'Agora vamos começar a cuidar das suas plantinhas com muito cuidado.',
+      buttonTitle: 'Começar',
+      icon: 'smile',
+      nextScreen: 'PlantSelect',
+    });
   }
 
   return (
@@ -79,7 +97,9 @@ const UserIdentification = (props: UserIdentificationProps) => {
         <Animated.View style={[styles.content, viwTranslateYAnimation]}>
           <View style={styles.form}>
             <Text style={styles.emoji}>{isInputFilled ? '😄' : '😃'} </Text>
-            <TextHeading style={styles.title}>Como podemos {'\n'} chamar você?</TextHeading>
+            <TextHeading style={styles.title}>
+              Como podemos {'\n'} chamar você?
+            </TextHeading>
             <TextInput
               style={[
                 styles.input,

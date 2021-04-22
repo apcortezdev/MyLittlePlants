@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Dimensions,
   StyleSheet,
@@ -15,25 +15,36 @@ interface ButtonProps extends TouchableOpacityProps {
 }
 
 export default function Button({ titleText, titleIcon, ...rest }: ButtonProps) {
+  const touchRef = useRef(null);
+  const [positionHeight, setPositionHeight] = useState<number>(0);
 
-  const [screenHeight, setScreenHeight] = useState(0);
   let width = 56;
   const mediumWidth = Dimensions.get('window').width * 0.65;
-  const largeWidth = Dimensions.get('window').width * 0.80;
+  const largeWidth = Dimensions.get('window').width * 0.8;
 
   if (titleText && titleText.length > 1) {
-    width = screenHeight > Dimensions.get('window').height * 0.75 ? largeWidth : mediumWidth;
+    width =
+      positionHeight > Dimensions.get('window').height * 0.75
+        ? largeWidth
+        : mediumWidth;
   }
+
+  useEffect(() => {
+    if (touchRef.current) {
+      // @ts-ignore
+      touchRef.current.measure((fx, fy, width, height, px, py: number) => {
+        setPositionHeight(py);
+      });
+    }
+  }, [positionHeight]);
 
   return (
     <TouchableOpacity
       // @ts-ignore
       style={styles.button(width)}
+      ref={touchRef}
       activeOpacity={0.7}
       {...rest}
-      onLayout={({ nativeEvent }) => {
-        setScreenHeight(nativeEvent.layout.y);
-      }}
     >
       <Text style={styles.buttonText}>
         {titleIcon && titleIcon}

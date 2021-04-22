@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from 'react';
 import { View, StyleSheet, Image, StyleProp, ViewStyle } from 'react-native';
 import userImg from '../../assets/face.png';
@@ -9,11 +10,22 @@ interface IProps {
 }
 
 const Header: React.FunctionComponent<IProps> = (props): JSX.Element => {
+
+  const [name, setName] = React.useState<string>();
+
+  React.useEffect(() => {
+    async function getName() {
+      const user = await AsyncStorage.getItem('@plantmanager:user');
+      setName(user || 'Pessoinha');
+    }
+    getName();
+  }, []);
+
   return (
     <View style={[styles.container, props.style]}>
       <View>
         <TextComplement style={styles.header}>Olá, </TextComplement>
-        <TextHeading style={styles.header}>Tiago</TextHeading>
+        <TextHeading style={styles.header}>{name}!</TextHeading>
       </View>
       <Image style={styles.image} source={userImg} />
     </View>
