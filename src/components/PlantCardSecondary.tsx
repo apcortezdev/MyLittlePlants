@@ -1,6 +1,9 @@
+import { Feather } from '@expo/vector-icons';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import Animated from 'react-native-reanimated';
 import { SvgFromUri } from 'react-native-svg';
 import colors from '../styles/colors';
 import TextComplement from './TextComplement';
@@ -11,18 +14,36 @@ interface PlantCardSecondaryProps extends RectButtonProps {
     photo: string;
     hour: string;
   };
+  handleRemove: () => void;
 }
 
-const PlantCardSecondary = ({ data, ...rest }: PlantCardSecondaryProps) => {
+const PlantCardSecondary = ({
+  data,
+  handleRemove,
+  ...rest
+}: PlantCardSecondaryProps) => {
   return (
-    <RectButton style={styles.container} {...rest}>
-      <SvgFromUri uri={data.photo} width={70} height={70} />
-      <TextComplement style={styles.title}>{data.name}</TextComplement>
-      <View style={styles.details}>
-        <TextComplement style={styles.timeLabel}>Regar às</TextComplement>
-        <TextComplement style={styles.time}>{data.hour}</TextComplement>
-      </View>
-    </RectButton>
+    <Swipeable
+      overshootRight={false} // turns off swipe to the right
+      renderRightActions={() => (
+        <Animated.View>
+          <View>
+            <RectButton style={styles.buttonRemove} onPress={handleRemove}>
+              <Feather name="trash" size={24} color={colors.white} />
+            </RectButton>
+          </View>
+        </Animated.View>
+      )}
+    >
+      <RectButton style={styles.container} {...rest}>
+        <SvgFromUri uri={data.photo} width={70} height={70} />
+        <TextComplement style={styles.title}>{data.name}</TextComplement>
+        <View style={styles.details}>
+          <TextComplement style={styles.timeLabel}>Regar às</TextComplement>
+          <TextComplement style={styles.time}>{data.hour}</TextComplement>
+        </View>
+      </RectButton>
+    </Swipeable>
   );
 };
 
@@ -44,13 +65,25 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-end',
   },
-  title: {
-  },
+  title: {},
   timeLabel: {
     fontSize: 13,
     color: colors.body_light,
   },
   time: {
     fontSize: 13,
+  },
+  buttonRemove: {
+    width: Dimensions.get('window').width /4,
+    height: 100,
+    backgroundColor: colors.red,
+    marginVertical: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+    right: (Dimensions.get('window').width /4) /3,
+    paddingVertical: 15,
+    borderRadius: 20,
+    paddingLeft: 30,
   },
 });

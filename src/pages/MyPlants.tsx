@@ -1,20 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image, Alert } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import Header from '../components/Header';
 import colors from '../styles/colors';
 import waterdrop from '../assets/waterdrop.png';
 import TextHeading from '../components/TextHeading';
 import { FlatList } from 'react-native-gesture-handler';
-import { loadPlant, PlantProps } from '../libs/storage';
+import { loadPlant, PlantProps, removePlant } from '../libs/storage';
 import { formatDistance } from 'date-fns';
 import { pt } from 'date-fns/locale';
 import PlantCardSecondary from '../components/PlantCardSecondary';
+import Load from '../components/Load';
 
 const MyPlants = () => {
   const [plants, setPlants] = useState<PlantProps[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [nextWatered, setNextWatered] = useState<string>();
+
+  const handleRemove = (plant: PlantProps) => {
+    Alert.alert('Remover', `Deseja remover essa ${plant.name}?`, [
+      {
+        text: 'Não',
+        style: 'cancel',
+      },
+      {
+        text: 'Sim',
+        onPress: async () => {
+          try {
+            await removePlant(plant.id);
+            setPlants((plants) =>
+              plants.filter((item) => item.id !== plant.id)
+            );
+          } catch (err) {
+            Alert.alert('Ops! Deu 💩! Reinicie o seu celular ou compre outro!');
+          }
+        },
+      },
+    ]);
+  };
 
   useEffect(() => {
     async function loadStorageData() {
@@ -32,6 +55,8 @@ const MyPlants = () => {
     loadStorageData();
   }, []);
 
+  if (loading) return <Load />;
+
   return (
     <View style={styles.container}>
       <Header style={styles.header} />
@@ -45,7 +70,11 @@ const MyPlants = () => {
           data={plants}
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
-            <PlantCardSecondary data={item} onPress={() => {}} />
+            <PlantCardSecondary
+              data={item}
+              onPress={() => {}}
+              handleRemove={() => handleRemove(item)}
+            />
           )}
           showsVerticalScrollIndicator={false}
         />

@@ -20,7 +20,7 @@ import fonts from '../styles/fonts';
 import DateTimePicker, { Event } from '@react-native-community/datetimepicker';
 import { format, isBefore } from 'date-fns';
 import { Ionicons } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { loadPlant, PlantProps, savePlant } from '../libs/storage';
 
 interface PlantSaveProps {}
@@ -78,39 +78,53 @@ const PlantSave = (props: PlantSaveProps) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.plantInfo}>
-        <SvgFromUri uri={plant.photo} height={150} width={150} />
-        <TextHeading style={styles.plantName}>{plant.name}</TextHeading>
-        <TextComplement style={styles.plantAbout}>{plant.about}</TextComplement>
-      </View>
-      <View style={styles.controller}>
-        <View style={styles.tipContainer}>
-          <Image source={waterdrop} style={styles.tipImage} />
-          <Text style={styles.tipText}>{plant.water_tips}</Text>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={styles.container}
+    >
+      <View style={styles.container}>
+        <View style={styles.plantInfo}>
+          <SvgFromUri uri={plant.photo} height={150} width={150} />
+          <TextHeading style={styles.plantName}>{plant.name}</TextHeading>
+          <TextComplement style={styles.plantAbout}>
+            {plant.about}
+          </TextComplement>
         </View>
-        <TextComplement style={styles.alertLabel}>
-          Escolha o melhor horário para ser lembrado:
-        </TextComplement>
-        {showDatePicker && (
-          <DateTimePicker
-            value={selectedDateTime}
-            mode="time"
-            display="spinner"
-            onChange={handleChangeTime}
-          />
-        )}
-        {Platform.OS === 'android' && (
-          <TouchableOpacity activeOpacity={0.7} onPress={openTimePickerAndroid}>
-            <TextComplement style={styles.setTime}>
-              <Ionicons name="alarm-outline" size={24} color={colors.heading} />
-              {format(selectedDateTime, 'HH:mm')}
-            </TextComplement>
-          </TouchableOpacity>
-        )}
-        <Button titleText="Cadastrar Planta" onPress={handleSave} />
+        <View style={styles.controller}>
+          <View style={styles.tipContainer}>
+            <Image source={waterdrop} style={styles.tipImage} />
+            <Text style={styles.tipText}>{plant.water_tips}</Text>
+          </View>
+          <TextComplement style={styles.alertLabel}>
+            Escolha o melhor horário para ser lembrado:
+          </TextComplement>
+          {showDatePicker && (
+            <DateTimePicker
+              value={selectedDateTime}
+              mode="time"
+              display="spinner"
+              onChange={handleChangeTime}
+            />
+          )}
+          {Platform.OS === 'android' && (
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={openTimePickerAndroid}
+            >
+              <TextComplement style={styles.setTime}>
+                <Ionicons
+                  name="alarm-outline"
+                  size={24}
+                  color={colors.heading}
+                />
+                {format(selectedDateTime, 'HH:mm')}
+              </TextComplement>
+            </TouchableOpacity>
+          )}
+          <Button titleText="Cadastrar Planta" onPress={handleSave} />
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
