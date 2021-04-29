@@ -8,7 +8,7 @@ import TextHeading from '../components/TextHeading';
 import { FlatList } from 'react-native-gesture-handler';
 import { loadPlant, PlantProps, removePlant } from '../libs/storage';
 import { formatDistance } from 'date-fns';
-import { pt } from 'date-fns/locale';
+import { enUS } from 'date-fns/locale';
 import PlantCardSecondary from '../components/PlantCardSecondary';
 import Load from '../components/Load';
 
@@ -18,13 +18,13 @@ const MyPlants = () => {
   const [nextWatered, setNextWatered] = useState<string>();
 
   const handleRemove = (plant: PlantProps) => {
-    Alert.alert('Remover', `Deseja remover essa ${plant.name}?`, [
+    Alert.alert('Remove', `Sure you want to remove this ${plant.name}?`, [
       {
-        text: 'Não',
+        text: 'No',
         style: 'cancel',
       },
       {
-        text: 'Sim',
+        text: 'Yes',
         onPress: async () => {
           try {
             await removePlant(plant.id);
@@ -32,7 +32,7 @@ const MyPlants = () => {
               plants.filter((item) => item.id !== plant.id)
             );
           } catch (err) {
-            Alert.alert('Ops! Deu 💩! Reinicie o seu celular ou compre outro!');
+            Alert.alert('Ops! Some 💩 just happend! Please try again later!');
           }
         },
       },
@@ -45,9 +45,9 @@ const MyPlants = () => {
       const nextTime = formatDistance(
         new Date(plantsStorage[0].dateTimeNotification).getTime(),
         new Date().getTime(),
-        { locale: pt }
+        { locale: enUS }
       );
-      setNextWatered(`Regue sua ${plantsStorage[0].name} daqui a ${nextTime}`);
+      setNextWatered(`Water your ${plantsStorage[0].name} in ${nextTime}`);
 
       setPlants(plantsStorage);
       setLoading(false);
@@ -65,7 +65,7 @@ const MyPlants = () => {
         <Text style={styles.spotlightText}>{nextWatered}</Text>
       </View>
       <View style={styles.plants}>
-        <TextHeading style={styles.plantsTitle}>Próximas regadas</TextHeading>
+        <TextHeading style={styles.plantsTitle}>Next waterings</TextHeading>
         <FlatList
           data={plants}
           keyExtractor={(item) => String(item.id)}

@@ -63,16 +63,16 @@ const PlantSave = (props: PlantSaveProps) => {
       });
 
       navigation.navigate('Confirmation', {
-        title: 'Tudo certo',
+        title: 'All set',
         subtitle:
-          'Fique tranquilo que sempre vamos lembrar você de cuidar da sua plantinha com bastante amor.',
-        buttonTitle: 'Muito obrigado :D',
+          'Rest assured that we will always remind you to take care of your little plant!',
+        buttonTitle: 'Thank you :D',
         icon: 'hug',
         nextScreen: 'MyPlants',
       });
     } catch (err) {
       return Alert.alert(
-        'Ops! Deu 💩! Reinicie o seu celular ou compre outro!'
+        'Ops! Some 💩 just happend! Please try again later!'
       );
     }
   };
@@ -96,7 +96,7 @@ const PlantSave = (props: PlantSaveProps) => {
             <Text style={styles.tipText}>{plant.water_tips}</Text>
           </View>
           <TextComplement style={styles.alertLabel}>
-            Escolha o melhor horário para ser lembrado:
+            Choose the best time to be reminded:
           </TextComplement>
           {showDatePicker && (
             <DateTimePicker
@@ -121,7 +121,7 @@ const PlantSave = (props: PlantSaveProps) => {
               </TextComplement>
             </TouchableOpacity>
           )}
-          <Button titleText="Cadastrar Planta" onPress={handleSave} />
+          <Button titleText="Set Reminder" onPress={handleSave} />
         </View>
       </View>
     </ScrollView>

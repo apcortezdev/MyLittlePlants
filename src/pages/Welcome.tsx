@@ -12,7 +12,6 @@ import imgWatering from '../assets/watering.png';
 import Button from '../components/Button';
 import { Feather } from '@expo/vector-icons';
 import colors from '../styles/colors';
-import fonts from '../styles/fonts';
 import { useNavigation } from '@react-navigation/core';
 import TextHeading from '../components/TextHeading';
 import TextComplement from '../components/TextComplement';
@@ -28,12 +27,12 @@ export default function Welcome() {
     <SafeAreaView style={styles.container}>
       <View style={styles.wrapper}>
         <TextHeading style={styles.title}>
-          Gerencie {'\n'} suas plantas de {'\n'} forma fácil
+          Manage {'\n'} your plants {'\n'} easily!
         </TextHeading>
         <Image style={styles.image} source={imgWatering} resizeMode="contain" />
         <TextComplement style={styles.subtitle}>
-          Não esqueça mais de regar suas plantas. Nós cuidamos de lembrar você
-          sempre que precisar.
+          Never again forget to water your plants. We will take care of
+          remembering you anytime!
         </TextComplement>
         <Button
           titleIcon={

@@ -71,21 +71,21 @@ const UserIdentification = (props: UserIdentificationProps) => {
   }
 
   async function handleSubmit() {
-    if (!name) return Alert.alert('Me diz como chamar você 🤔');
+    if (!name) return Alert.alert('Please tell me your name! 🤔');
 
     // You can save to Async multiple name/values instead of a huge obj:
     try {
       await AsyncStorage.setItem('@plantmanager:user', name.trim());
     } catch (err) {
       return Alert.alert(
-        'Ops! Deu 💩! Reinicie o seu celular ou compre outro!'
+        'Ops! Some 💩 just happend! Please try again later!'
       );
     }
     navigation.navigate('Confirmation', {
-      title: 'Prontinho',
+      title: 'All ready!',
       subtitle:
-        'Agora vamos começar a cuidar das suas plantinhas com muito cuidado.',
-      buttonTitle: 'Começar',
+        'Now let\'s start taking care of your plants.',
+      buttonTitle: 'Start',
       icon: 'smile',
       nextScreen: 'PlantSelect',
     });
@@ -98,7 +98,7 @@ const UserIdentification = (props: UserIdentificationProps) => {
           <View style={styles.form}>
             <Text style={styles.emoji}>{isInputFilled ? '😄' : '😃'} </Text>
             <TextHeading style={styles.title}>
-              Como podemos {'\n'} chamar você?
+              How can I{'\n'} call you?
             </TextHeading>
             <TextInput
               style={[
@@ -109,12 +109,12 @@ const UserIdentification = (props: UserIdentificationProps) => {
               ]}
               value={name}
               onChangeText={handleInputChange}
-              placeholder="Digite o nome"
+              placeholder="Type your name"
               onBlur={handleInputFocusBlur}
               onFocus={handleInputFocusBlur}
             />
             <View style={styles.footer}>
-              <Button titleText="Confirmar" onPress={handleSubmit} />
+              <Button titleText="Confirm" onPress={handleSubmit} />
             </View>
           </View>
         </Animated.View>

@@ -39,7 +39,7 @@ const PlantCardSecondary = ({
         <SvgFromUri uri={data.photo} width={70} height={70} />
         <TextComplement style={styles.title}>{data.name}</TextComplement>
         <View style={styles.details}>
-          <TextComplement style={styles.timeLabel}>Regar às</TextComplement>
+          <TextComplement style={styles.timeLabel}>Watering at</TextComplement>
           <TextComplement style={styles.time}>{data.hour}</TextComplement>
         </View>
       </RectButton>

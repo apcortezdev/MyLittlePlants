@@ -79,7 +79,7 @@ const PlantSelect = (props: PlantSelectProps) => {
       const { data } = await api.get(
         'plants_environments?_sort=title&_order=asc'
       );
-      setEnvironments([{ key: 'all', title: 'Todos' }, ...data]);
+      setEnvironments([{ key: 'all', title: 'All' }, ...data]);
     }
     fetchEnvironment();
   }, []);
@@ -94,8 +94,8 @@ const PlantSelect = (props: PlantSelectProps) => {
     <View style={styles.container}>
       <View style={styles.content}>
         <Header style={styles.header} />
-        <TextHeading>Em qual ambiente</TextHeading>
-        <TextComplement>você quer colocar sua planta?</TextComplement>
+        <TextHeading>In which environment </TextHeading>
+        <TextComplement>do you want to place your plant?</TextComplement>
       </View>
       <View>
         <FlatList

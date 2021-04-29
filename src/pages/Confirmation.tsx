@@ -4,8 +4,6 @@ import { Text, View, StyleSheet, SafeAreaView } from 'react-native';
 import Button from '../components/Button';
 import TextComplement from '../components/TextComplement';
 import TextHeading from '../components/TextHeading';
-import colors from '../styles/colors';
-import fonts from '../styles/fonts';
 
 interface ConfirmationProps {}
 

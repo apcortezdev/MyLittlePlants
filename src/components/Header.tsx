@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from 'react';
 import { View, StyleSheet, Image, StyleProp, ViewStyle } from 'react-native';
-import userImg from '../../assets/face.png';
+import userImg from '../../assets/girl.png';
 import TextComplement from './TextComplement';
 import TextHeading from './TextHeading';
 
@@ -24,7 +24,7 @@ const Header: React.FunctionComponent<IProps> = (props): JSX.Element => {
   return (
     <View style={[styles.container, props.style]}>
       <View>
-        <TextComplement style={styles.header}>Olá, </TextComplement>
+        <TextComplement style={styles.header}>Hello, </TextComplement>
         <TextHeading style={styles.header}>{name}!</TextHeading>
       </View>
       <Image style={styles.image} source={userImg} />

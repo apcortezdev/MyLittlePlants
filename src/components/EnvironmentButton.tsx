@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import { Text, StyleSheet, StyleProp, ViewStyle } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import colors from '../styles/colors';
 import fonts from '../styles/fonts';
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.shape,
     paddingVertical: 7,
     height: 40,
-    width: 76,
+    width: 100,
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
